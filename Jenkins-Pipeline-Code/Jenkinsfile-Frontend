@@ -18,7 +18,7 @@ pipeline {
         }
         stage('Checkout from Git') {
             steps {
-                git credentialsId: 'GITHUB', url: 'https://github.com/TanyaRoy1708/three-tier-app.git'
+                git branch: 'main', credentialsId: 'GITHUB', url: 'https://github.com/TanyaRoy1708/three-tier-app.git'
             }
         }
         //analysis
