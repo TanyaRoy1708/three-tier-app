@@ -43,4 +43,4 @@ spec:
       volumes: 
       - name: mongo-volume
         persistentVolumeClaim:
-          claimName: mongo-volume-claim
+          claimName: mongo-ebs-claim

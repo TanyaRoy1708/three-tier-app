@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: mongo-volume-claim
+  name: mongo-ebs-claim  # Changed name
   namespace: three-tier
 spec: 
   accessModes:  
