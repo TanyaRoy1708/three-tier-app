@@ -1,0 +1,21 @@
+# Dependency directories
+node_modules/
+
+# IDE files
+.vscode/
+.idea/
+
+# Tool artifacts
+.scannerwork/
+trivyfs.txt
+trivyimage.txt
+dependencies.xml
+dependency-check-report.xml
+
+# Temporary Jenkins files
+*@tmp/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*

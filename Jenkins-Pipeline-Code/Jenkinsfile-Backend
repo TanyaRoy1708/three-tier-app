@@ -90,14 +90,21 @@ pipeline {
                         sh '''
                             git config user.email "roytanya2800@gmail.com"
                             git config user.name "TanyaRoy1708"
-                            BUILD_NUMBER=${BUILD_NUMBER}
-                            echo $BUILD_NUMBER
-                            imageTag=$(grep -oP '(?<=backend:)[^ ]+' deployment.yaml)
-                            echo $imageTag
-                            sed -i "s/${AWS_ECR_REPO_NAME}:${imageTag}/${AWS_ECR_REPO_NAME}:${BUILD_NUMBER}/" deployment.yaml
-                            git add deployment.yaml
-                            git commit -m "Update deployment image tag to version ${BUILD_NUMBER} [skip ci]"
-                            git push https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME}.git HEAD:main
+
+                            # Extract the current image tag (look for the line with backend:)
+                            imageTag=$(grep -oP '(?<=backend:)[^ ]+' deployment.yaml | head -n 1)
+                            echo "Current Image Tag: $imageTag"
+                            echo "New Build Number: ${BUILD_NUMBER}"
+
+                            # Only update and commit if the version has actually changed
+                            if [ "$imageTag" != "${BUILD_NUMBER}" ]; then
+                                sed -i "s/backend:${imageTag}/backend:${BUILD_NUMBER}/g" deployment.yaml
+                                git add deployment.yaml
+                                git commit -m "Update deployment image tag to version ${BUILD_NUMBER} [skip ci]"
+                                git push https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME}.git HEAD:main
+                            else
+                                echo "No changes detected (Version is already ${BUILD_NUMBER}). Skipping Git commit."
+                            fi
                         '''
                     }
                 }
