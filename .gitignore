@@ -5,6 +5,7 @@ node_modules/
 .vscode/
 .idea/
 
+
 # Tool artifacts
 .scannerwork/
 trivyfs.txt
